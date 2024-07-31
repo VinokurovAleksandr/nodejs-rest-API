@@ -13,6 +13,7 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 
 app.use(logger(formatsLogger));
 app.use(cors());
+// Перевіряє чи є в запиті  тіло  , перевіряє contentType, виконує json parse/// middleware
 app.use(express.json());
 
 // опис маршруту. Будь який запит який поч. з /api/contacts потрібно оброблюваи contactsRouter  
