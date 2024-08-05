@@ -1,0 +1,5 @@
+const DB_HOST = "mongodb+srv://vinokurov:MF2jLMq2.4QbF@p@cluster0.zlmhmdc.mongodb.net/contacts_reader?retryWrites=true&w=majority&appName=Cluster0";
+
+module.exports = {
+    DB_HOST
+}

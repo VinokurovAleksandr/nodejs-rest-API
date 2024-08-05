@@ -1,9 +1,18 @@
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
+const mongoose = require('mongoose');
+
+const { MNG_DB } = require('../config');
 
 const contactsRouter = require('./routes/api/contacts');
 
+
+// Підключення  до mongoose db
+mongoose.connect(MNG_DB)
+  .then(() => console.log('Data base connect success')
+  .catch(error => error.message)
+  )
 
 // створюємо сервер 
 const app = express();
