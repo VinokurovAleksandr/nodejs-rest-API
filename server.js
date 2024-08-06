@@ -1,8 +1,12 @@
 const app = require('./app');
 const  mongoose = require('mongoose');
+
+
 // запуск без HEROKU
 // const { DB_HOST } = require('./config');
-const { DB_HOST } = process.env;
+
+// process.env - взяти строку підлючень зі змінного оточення 
+const { DB_HOST } = process.env; 
 
 
 mongoose.connect(DB_HOST)
