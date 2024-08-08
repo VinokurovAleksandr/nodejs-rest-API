@@ -12,33 +12,42 @@ const contactSchema = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().email().required(),
   phone: Joi.string().required(),
+  favorite: Joi.boolean(),
 })
+
+const contactsUpdateFavoriteSchema =Joi.object({
+  favorite: Joi.boolean(),
+});
 
 // оброблювачі запитів 
 
-// router.get('/', async (req, res, next) => {
-//   try {
-//     const  result = await contacts.listContacts();
-//      if (!result) { 
-//       throw createError(404);
-//      }
-//      res.json(result);
-//   } catch (error) {
-//     next(error)
-//   }
-// });
+router.get('/', async (req, res, next) => {
+  try {
+    const  result = await Contact.find();
+    // const  result = await Contact.find({}, "name email"); що б епредати окремі поля  
+    // const  result = await Contact.find({}, "-name -email"); що б Виключити   окремі поля  
 
-// router.get('/:id', async (req, res, next) => {
-//   try {
-//     const result = await contacts.getContactById(req.params.id);
-//     if (!result) {
-//       throw createError(404);
-//     }
-//     res.json(result);
-//   } catch (error) {
-//     next(error); // Передача помилки в middleware обробник помилок
-//   }
-// });
+     if (!result) { 
+      throw createError(404);
+     }
+     res.json(result);
+  } catch (error) {
+    next(error)
+  }
+});
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const result = await Contact.findById(req.params.id);
+    // const result = await Contact.findById({req.params.id});б ільш короткий метор 
+    if (!result) {
+      throw createError(404);
+    }
+    res.json(result);
+  } catch (error) {
+    next(error); // Передача помилки в middleware обробник помилок
+  }
+});
 
 router.post('/', async (req, res, next) => {
   try{
@@ -53,38 +62,50 @@ router.post('/', async (req, res, next) => {
 }
 });
 
-// router.patch('/:id', async (req, res, next) => {
-//   res.json({ message: 'template message' })
-// });
+router.patch('/:id/favorite', async (req, res, next) => {
+  try{
+    const {error} = contactsUpdateFavoriteSchema.validate(req.body);
+    if(error) {
+      throw createError(400, error.message)
+    }
+    const result = await Contact.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    if(!result) {
+      throw createError(404);
+    }
+    res.json(result);
+  } catch (error){
+    next(error)
+  }
+});
 
-// router.delete('/:id', async (req, res, next) => {
-//   try{
-//     const result = await contacts.removeContact(req.params.id);
-//     if(!result) {
-//       throw createError(404);
-//     } 
-//     res.json({
-//       message: 'Contact deleted'
-//     })
-//   } catch (error){
-//     next(error)
-//   }
-// });
+router.delete('/:id', async (req, res, next) => {
+  try{
+    const result = await Contact.findByIdAndDelete(req.params.id);
+    if(!result) {
+      throw createError(404);
+    } 
+    res.json({
+      message: 'Contact deleted'
+    })
+  } catch (error){
+    next(error)
+  }
+});
 
-// router.put('/:id', async (req, res, next) => {
-//   try {
-//     const {error} = contactSchema.validate(req.body);
-//     if(error) {
-//      throw createError(400, error.message)
-//     }
-//     const result = await contacts.updateContact(req.params.id, req.body);
-//     if(!result) {
-//       throw createError(404);
-//     }
-//     res.json(result);
-//   } catch (error){
-//       next(error)
-//   }
-// });
+router.put('/:id', async (req, res, next) => {
+  try {
+    const {error} = contactSchema.validate(req.body);
+    if(error) {
+     throw createError(400, error.message)
+    }
+    const result = await Contact.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    if(!result) {
+      throw createError(404);
+    }
+    res.json(result);
+  } catch (error){
+      next(error)
+  }
+});
 
 module.exports = router
