@@ -5,6 +5,7 @@ const dotenv = require("dotenv")
 dotenv.config();
 
 const contactsRouter = require('./routes/api/contacts');
+const authReducer = require('./routes/api/auth');
 
 
 // створюємо сервер 
@@ -20,7 +21,7 @@ app.use(express.json());
 
 // опис маршруту. Будь який запит який поч. з /api/contacts потрібно оброблюваи contactsRouter  
 app.use('/api/contacts', contactsRouter);
-
+app.use('/api/auth', authReducer);
 // опис помилки якщо сторінки немає
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' })
