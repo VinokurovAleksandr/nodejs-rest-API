@@ -1,10 +1,7 @@
-const Contact = require('../../models/contactModel');
+const {Contact} = require('../../models/contactModel');
 const createError = require('../../helpers/createError');
-const Joi = require("joi");
+const {contactsUpdateFavoriteSchema} = require('../../models/contactModel');
 
-const contactsUpdateFavoriteSchema =Joi.object({
-  favorite: Joi.boolean(),
-});
 
 const updateFavoriteById = async (req, res, next) => {
     try{

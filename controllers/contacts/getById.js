@@ -1,4 +1,4 @@
-const Contact = require('../../models/contactModel');
+const {Contact} = require('../../models/contactModel');
 const createError = require('../../helpers/createError');
 
 

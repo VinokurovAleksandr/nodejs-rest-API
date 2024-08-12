@@ -1,6 +1,6 @@
-const Contact = require('../../models/contactModel');
+const {Contact} = require('../../models/contactModel');
 const createError = require('../../helpers/createError');
-const {contactSchema} = require('./contactSchema');
+const {contactSchema} = require('../../models/contactModel');
 
 
 const updateById = async (req, res, next) => {
