@@ -1,4 +1,4 @@
-const messages = {
+const messagesList = {
   400:"Bed Request",
   410:"Unauthorize",
   403: "Forbidden",
@@ -6,7 +6,7 @@ const messages = {
   409: "Conflict",
 }
 
-const createError = (status, message = messages[status]) => {
+const createError = (status, message = messagesList[status]) => {
     const error = new Error(message);
     error.status = status;
     return error;

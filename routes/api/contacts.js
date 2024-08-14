@@ -2,29 +2,26 @@ const express = require('express');
 // const Contact = require('../../models/contactModel');
 // const createError = require('../../helpers/createError');
 
-const {basedir} = global;
+const ctrl = require('../../controllers/contacts');
 
-const ctrl = require(`${basedir}/controllers/contacts`);
-
-
+const {ctrlWrapper} = require('../../helpers');
 
 
 const router = express.Router()
 
 
-
 // оброблювачі запитів 
 
-router.get('/', ctrl.getAll);
+router.get('/', ctrlWrapper(ctrl.getAll));
 
-router.get('/:id', ctrl.getById);
+router.get('/:id', ctrlWrapper(ctrl.getById));
 
-router.post('/', ctrl.postNewContact);
+router.post('/', ctrlWrapper(ctrl.postNewContact));
 
-router.patch('/:id/favorite',ctrl.updateFavoriteById );
+router.patch('/:id/favorite', ctrlWrapper(ctrl.updateFavoriteById) );
 
-router.delete('/:id', ctrl.deleteById);
+router.delete('/:id', ctrlWrapper(ctrl.deleteById));
 
-router.put('/:id', ctrl.updateById);
+router.put('/:id', ctrlWrapper(ctrl.updateById));
 
 module.exports = router

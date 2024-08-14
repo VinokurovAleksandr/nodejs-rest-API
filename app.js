@@ -4,6 +4,8 @@ const cors = require('cors');
 const dotenv = require("dotenv")
 dotenv.config();
 
+global.basedir = __dirname;
+
 const contactsRouter = require('./routes/api/contacts');
 const authReducer = require('./routes/api/auth');
 
@@ -32,9 +34,9 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message})
 });
 
-app.get("/contacts", (req, res)=> {
-  res.json(contacts)
-});
+// app.get("/contacts", (req, res)=> {
+//   res.json(contacts)
+// });
 
 
 
