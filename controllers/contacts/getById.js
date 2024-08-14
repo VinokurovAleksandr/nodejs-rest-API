@@ -1,5 +1,7 @@
-const {Contact} = require('../../models/contactModel');
-const {createError} = require('../../helpers');
+const {basedir} = global;
+
+const {Contact} = require(`${basedir}/models/contactModel`);
+const {createError} = require(`${basedir}/helpers`);
 
 
 const getById = async (req, res, next) => {

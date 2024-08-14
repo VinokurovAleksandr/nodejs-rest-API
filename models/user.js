@@ -1,5 +1,6 @@
 const {Schema, model} = require("mongoose");
 const Joi = require("joi");
+const { login } = require("../controllers/auth");
 
 
 
@@ -34,12 +35,17 @@ const userSchema = new Schema (
 );
 
 const registerSchema = Joi.object({
-    password: Joi.string().required(),
+    password: Joi.string().min(6).required(),
+    email: Joi.string().pattern(emailRegexp).required(),
+});
+const loginSchema = Joi.object({
+    password: Joi.string().min(6).required(),
     email: Joi.string().pattern(emailRegexp).required(),
 });
 
 const schemas = {
     register: registerSchema,
+    login: loginSchema,
 };
 
 const User = model('user', userSchema);

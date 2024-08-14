@@ -1,6 +1,12 @@
+const bcrypt = require("bcryptjs");
 
-const {User, schemas} = require('../../models/user');
-const {createError} = require('../../helpers');
+
+const {basedir} = global;
+
+const {User, schemas} = require(`${basedir}/models/user`);
+const {createError} = require(`${basedir}/helpers`);
+
+
 
 // 1. передаємо тіло  
 // 2. якщо є то передаємо в логи , пмилка 409
@@ -9,7 +15,7 @@ const {createError} = require('../../helpers');
 // 5. відправляємо відповідь 
 // 6.
 
-const register = async (req, res) => {
+const singup = async (req, res) => {
 
      // перевіряємо тіло на валідацію
      const {error} = schemas.register.validate(req.body);
@@ -17,14 +23,16 @@ const register = async (req, res) => {
          throw createError(400, error.message);
      }
      // перевіряємо чи є вже такий користувач
-     const {email} = req.body;
+     const {email, password} = req.body;
      const user = await User.findOne({ email });
      // якщо  є то викидаємо помилку
      if(user) {
          throw createError(409, `${email} in use`);
      }
+     const hashPassword = await bcrypt.hash(password, 10);
+     
       // Створюємо нового користувача
-     const result = await User.create(req.body);
+      const result = await User.create({...req.body, password: hashPassword})
 
      // Відправляємо успішний результат
      res.status(201).json({
@@ -34,4 +42,4 @@ const register = async (req, res) => {
 
 };
 
-module.exports = register;
+module.exports = singup;
