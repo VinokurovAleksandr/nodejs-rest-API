@@ -1,6 +1,7 @@
 const {Schema, model} = require("mongoose");
 const Joi = require("joi");
-const { login } = require("../controllers/auth");
+
+// const { login } = require("../controllers/auth");
 
 
 
@@ -50,4 +51,8 @@ const schemas = {
 
 const User = model('user', userSchema);
 
-module.exports = {User, schemas};
+module.exports = {
+   User,
+   schemas
+};
+

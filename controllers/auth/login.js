@@ -1,8 +1,13 @@
 const {basedir} = global;
 
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+
 const {User, schemas} = require(`${basedir}/models/user`);
 const {createError} = require(`${basedir}/helpers`);
+
+const {SECRET_KEY} = process.env;
 
 
 const login = async (req, res) => {
@@ -19,7 +24,13 @@ const login = async (req, res) => {
     if(!comparePassword) {
         throw createError(401, 'Invalid password');
     }
-    const token = "dfsfsdfsdf.sdfdssd23232323"
+
+    const payload = {
+        id: user._id,
+    };
+    const token = jwt.sign(payload, SECRET_KEY, {expiresIn: "24h"});
+
+
     res.json({
         token,
     })

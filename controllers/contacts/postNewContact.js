@@ -4,13 +4,13 @@ const {createError} = require('../../helpers');
 const {contactSchema} = require('../../models/contactModel');
 
 
-
-
 const postNewContact = async (req, res, next) => {
   const {error} = contactSchema.validate(req.body);
     if(error) {
       createError(400, error.message);
     }
+    console.log(req.user);
+    
     const result = await Contact.create(req.body);
     res.status(201).json(result);
   };

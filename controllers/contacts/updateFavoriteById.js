@@ -1,4 +1,4 @@
-const {Contact} = require('../../models/contactModel');
+const {Contact, schemas} = require('../../models/contactModel');
 const {createError} = require('../../helpers');
 const {contactsUpdateFavoriteSchema} = require('../../models/contactModel');
 
