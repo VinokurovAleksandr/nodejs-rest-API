@@ -15,17 +15,17 @@ const router = express.Router()
 
 // оброблювачі запитів 
 
-router.get('/', ctrlWrapper(ctrl.getAll));
+router.get('/', auth,ctrlWrapper(ctrl.getAll));
 
-router.get('/:id', ctrlWrapper(ctrl.getById));
+router.get('/:id', auth, ctrlWrapper(ctrl.getById));
 
 router.post('/', auth,  ctrlWrapper(ctrl.postNewContact));
 
-router.patch('/:id/favorite', ctrlWrapper(ctrl.updateFavoriteById) );
+router.patch('/:id/favorite', auth, ctrlWrapper(ctrl.updateFavoriteById) );
 
-router.delete('/:id', ctrlWrapper(ctrl.deleteById));
+router.delete('/:id', auth, ctrlWrapper(ctrl.deleteById));
 
-router.put('/:id', ctrlWrapper(ctrl.updateById));
+router.put('/:id', auth, ctrlWrapper(ctrl.updateById));
 
 
 
