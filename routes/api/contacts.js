@@ -15,7 +15,7 @@ const router = express.Router()
 
 // оброблювачі запитів 
 
-router.get('/', auth,ctrlWrapper(ctrl.getAll));
+router.get('/', auth, ctrlWrapper(ctrl.getAll));
 
 router.get('/:id', auth, ctrlWrapper(ctrl.getById));
 
