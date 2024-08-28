@@ -1,11 +1,15 @@
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
+
 // const dotenv = require("dotenv")
 require('dotenv').config();
 
 
 global.basedir = __dirname;
+
+
+
 
 const contactsRouter = require('./routes/api/contacts');
 const authReducer = require('./routes/api/auth');
@@ -21,6 +25,7 @@ app.use(logger(formatsLogger));
 app.use(cors());
 // Перевіряє чи є в запиті  тіло  , перевіряє contentType, виконує json parse/// middleware
 app.use(express.json());
+app.use(express.static("public"));
 
 // опис маршруту. Будь який запит який поч. з /api/contacts потрібно оброблюваи contactsRouter  
 app.use('/api/contacts', contactsRouter);
