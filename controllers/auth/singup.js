@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-
+const gravatar = require("gravatar");
 
 const {basedir} = global;
 
@@ -30,9 +30,11 @@ const singup = async (req, res) => {
          throw createError(409, `${email} in use`);
      }
      const hashPassword = await bcrypt.hash(password, 10);
+
+     const avatarURL = gravatar.url(email);
      
       // Створюємо нового користувача
-      const result = await User.create({...req.body, password: hashPassword})
+      const result = await User.create({...req.body, password: hashPassword, avatarURL})
 
      // Відправляємо успішний результат
      res.status(201).json({
